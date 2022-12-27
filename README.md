@@ -68,10 +68,13 @@ returns all matches by a particular player playing against a particular player u
 returns all matches by a particular player playing against a particular player using particular characters using their [steamID64 in decimal format](https://www.steamidfinder.com/) at the time of the match. This is useful for players that change their name frequently.
 
 # Working with api.frameone.net directly
-There are two endpoints available to interact with this service.
+There are three endpoints available to interact with this service.
 
 ### api.frameone.net/upload-zip
-A GET request generates an [S3 Presigned POST](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/modules/_aws_sdk_s3_presigned_post.html) that can be used to upload .zip files for bulk replay processing. 
+A GET request generates an [S3 Presigned POST](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/modules/_aws_sdk_s3_presigned_post.html) that can be used to upload .zip files for bulk replay processing.
+
+### api.frameone.net/upload-ggr
+A GET request generates an [S3 Presigned POST](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/modules/_aws_sdk_s3_presigned_post.html) that can be used to upload an individual .ggr file for processing. Please do not use this unless you have a workflow that requires it.
 
 ## api.frameone.net/query-acpr
 A GET request to this endpoint will return an object containing items returned from the requested query type and parameters. All parameters are passed as strings.
