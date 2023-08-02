@@ -89,7 +89,7 @@ export const UploadPage = (props) => {
                 isError: true,
                 message: 'Improper file size. Minimum size is 1000 bytes'
             });
-        } else if (file.size > 262200000) {
+        } else if (file.size > 256000000) {
             setStatusMessage({
                 isError: true,
                 message: 'Improper file size. Maximum size is 250MB'
