@@ -29,7 +29,7 @@ export const ReplayPage = (props) => {
         const url = 'https://api.frameone.net/query-acpr';
         const routeKey = QueryTypes[queryType].route;
         const params: any = {...queryParams, routeKey};
-        params.Table = isTwitchReplay ? 'spectator-replays' : 'replays';
+        params.Table = isTwitchReplay ? 'spectator-replays' : 'prod-replays';
         if (date && date.length > 0) {
             params.Date = date;
         }
