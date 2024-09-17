@@ -77,7 +77,7 @@ const ItemsListComponent = (props) => {
                 </TableHead>
                 <TableBody>
                     {data.Items.map(e => {
-                        const replayUrl = `https://${data.bucket}.s3.amazonaws.com/${e.gameID}.ggr`;
+                        const replayUrl = `https://${data.bucket}.frameone.net/${e.gameID}.ggr`;
                         const p1Char = CharacterList[e.p1Character - 1];
                         const p2Char = CharacterList[e.p2Character - 1];
                         let date = new Date(e.date.slice(0, -1));
