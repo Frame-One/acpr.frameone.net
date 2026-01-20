@@ -1,0 +1,77 @@
+/*
+  App-level styles
+*/
+
+.app-container {
+  text-align: center;
+  background-color: #EAEAEA;
+  height: 100vh;
+  overflow-y: hidden;
+  padding-bottom: 60px;
+}
+
+.app-header-container {
+  height: 56px;
+}
+
+.app-bar-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+}
+
+.app-bar-logo {
+  width: 35%;
+  height: 100%;
+}
+
+.app-bar-button {
+  width: 10%;
+  height: 100%;
+}
+
+.app-page-container {
+  margin-left: 10%;
+  margin-right: 10%;
+  padding-top: 20px;
+  background-color: white;
+  height: 100%;
+  overflow-y: auto;
+}
+
+/*
+  Page-level styles
+*/
+
+.section-label {
+  margin-bottom: 6px;
+}
+
+.container {
+  padding-bottom: 10px;;
+  margin-left: 30%;
+  margin-right: 30%;
+  margin-bottom: 22px;
+}
+
+.input-field {
+  width: 60%;
+}
+
+.search-button-container {
+  margin-bottom: 16px;
+}
+
+.spinner-container {
+  height: 28px;
+  margin-bottom: 36px;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
