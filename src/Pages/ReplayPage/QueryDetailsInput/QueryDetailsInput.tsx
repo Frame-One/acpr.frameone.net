@@ -36,6 +36,21 @@ export const QueryDetailsInput = (props) => {
                                 value={queryParams[e.details.field] || ''}
                                 onChange={textOnChange}
                                 className='input-field'
+                                fullWidth
+                                sx={{
+                                    '& .MuiOutlinedInput-root': {
+                                        borderRadius: '12px',
+                                        '& fieldset': {
+                                            borderColor: '#e2e8f0'
+                                        },
+                                        '&:hover fieldset': {
+                                            borderColor: '#667eea'
+                                        },
+                                        '&.Mui-focused fieldset': {
+                                            borderColor: '#667eea'
+                                        }
+                                    }
+                                }}
                             />
                         </div>
                     </>
@@ -50,7 +65,7 @@ export const QueryDetailsInput = (props) => {
                 const selectOptions = e.details.options.map(option => (
                     <MenuItem key={option.value} value={queryType === 'Matchup' ?  getIndexForMatchupQuery(e.details.options, option) : option.value}>{option.label}</MenuItem>
                 ));
-    
+
                 const selectOnChange = (event: SelectChangeEvent) => {
                     const newQueryParams = {...queryParams};
                     newQueryParams[e.details.field] = event.target.value
@@ -69,6 +84,19 @@ export const QueryDetailsInput = (props) => {
                                 value={queryParams[e.details.field] || e.details.options[0].value}
                                 onChange={selectOnChange}
                                 className='input-field'
+                                fullWidth
+                                sx={{
+                                    borderRadius: '12px',
+                                    '& .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: '#e2e8f0'
+                                    },
+                                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: '#667eea'
+                                    },
+                                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: '#667eea'
+                                    }
+                                }}
                             >
                                 {selectOptions}
                             </Select>

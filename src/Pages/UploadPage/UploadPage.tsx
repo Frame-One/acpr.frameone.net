@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import axios from 'axios';
-import { Button, CircularProgress } from '@mui/material';
-import { ErrorOutline, CheckCircleOutline } from '@mui/icons-material';
+import { Button, CircularProgress, Box, Paper, Typography, Alert, AlertTitle } from '@mui/material';
+import { ErrorOutline, CheckCircleOutline, CloudUpload, Clear } from '@mui/icons-material';
 import '../../App.css';
 
 const isSuccessResponse = (status) => {
@@ -19,9 +19,9 @@ export const UploadPage = (props) => {
         e.preventDefault();
 
         setIsLoading(true);
-        
+
         const getUrl = 'https://api.frameone.net/upload-zip';
-        
+
         const getRequest: any = await axios(
             getUrl
         );
@@ -38,7 +38,7 @@ export const UploadPage = (props) => {
         const {data} = getRequest;
 
         const postUrl = data.result;
-        
+
         const config = data.fields;
 
         const formData = new FormData();
@@ -109,65 +109,165 @@ export const UploadPage = (props) => {
 
     const renderUploadInput = () => {
         return (
-            <div className='container' style={{paddingLeft: '55px'}}>
+            <Paper
+                elevation={0}
+                sx={{
+                    p: 6,
+                    textAlign: 'center',
+                    background: '#f7fafc',
+                    borderRadius: '16px',
+                    border: '2px dashed #cbd5e0',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                        borderColor: '#667eea',
+                        background: '#edf2f7'
+                    }
+                }}
+            >
+                <CloudUpload sx={{ fontSize: 64, color: '#667eea', mb: 2 }} />
+                <Typography variant="h6" sx={{ mb: 2, fontWeight: 600, color: '#2d3748' }}>
+                    Upload Replay Files
+                </Typography>
+                <Typography variant="body2" sx={{ mb: 3, color: '#718096' }}>
+                    Select a .zip file containing your .ggr replay files (Max 250MiB)
+                </Typography>
                 <form ref={formRef}>
-                    <input
-                        type="file"
-                        ref={formRef}
-                        accept="application/x-zip-compressed" 
-                        onChange={onFileSelect} 
+                    <Button
+                        component="label"
+                        variant="contained"
                         disabled={isLoading}
-                    />
+                        sx={{
+                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                            borderRadius: '12px',
+                            px: 4,
+                            py: 1.5,
+                            textTransform: 'none',
+                            fontWeight: 600,
+                            fontSize: '1rem',
+                            '&:hover': {
+                                background: 'linear-gradient(135deg, #5568d3 0%, #6b4295 100%)'
+                            }
+                        }}
+                    >
+                        Choose File
+                        <input
+                            type="file"
+                            hidden
+                            accept="application/x-zip-compressed"
+                            onChange={onFileSelect}
+                            disabled={isLoading}
+                        />
+                    </Button>
                 </form>
-            </div>
+                {file && typeof file !== 'string' && (
+                    <Typography variant="body2" sx={{ mt: 2, color: '#2d3748', fontWeight: 600 }}>
+                        Selected: {(file as File).name}
+                    </Typography>
+                )}
+            </Paper>
         );
     }
-    
+
     const renderSubmitButton = () => {
         return (
-            <div className='container'>
-                <Button onClick={onSubmit} disabled={file === '' || statusMessage.isError}>
+            <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', mt: 3 }}>
+                <Button
+                    onClick={onSubmit}
+                    disabled={file === '' || statusMessage.isError}
+                    variant="contained"
+                    startIcon={<CloudUpload />}
+                    sx={{
+                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                        borderRadius: '12px',
+                        px: 4,
+                        py: 1.5,
+                        textTransform: 'none',
+                        fontWeight: 600,
+                        fontSize: '1rem',
+                        boxShadow: '0 4px 12px rgba(102, 126, 234, 0.3)',
+                        '&:hover': {
+                            background: 'linear-gradient(135deg, #5568d3 0%, #6b4295 100%)',
+                            boxShadow: '0 6px 16px rgba(102, 126, 234, 0.4)'
+                        },
+                        '&:disabled': {
+                            background: '#cbd5e0',
+                            color: '#a0aec0'
+                        }
+                    }}
+                >
                     Upload file
                 </Button>
-                <Button onClick={onFileClear} disabled={file === ''}>
+                <Button
+                    onClick={onFileClear}
+                    disabled={file === ''}
+                    variant="outlined"
+                    startIcon={<Clear />}
+                    sx={{
+                        borderRadius: '12px',
+                        px: 4,
+                        py: 1.5,
+                        textTransform: 'none',
+                        fontWeight: 600,
+                        fontSize: '1rem',
+                        borderColor: '#e2e8f0',
+                        color: '#718096',
+                        '&:hover': {
+                            borderColor: '#cbd5e0',
+                            background: '#f7fafc'
+                        },
+                        '&:disabled': {
+                            borderColor: '#e2e8f0',
+                            color: '#cbd5e0'
+                        }
+                    }}
+                >
                     Clear
                 </Button>
-            </div>
+            </Box>
         );
     }
-    
+
     const renderSpinner= () => {
         return (
-            <div className='spinner-container'>
-                {isLoading && <CircularProgress />}
-            </div>        
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4, minHeight: '60px' }}>
+                {isLoading && <CircularProgress sx={{ color: '#667eea' }} size={48} />}
+            </Box>
         );
     }
-    
+
     const renderStatusMessage = () => {
         if (Object.keys(statusMessage).length > 0) {
             return (
-                <div className='container flex-container'>
-                    <div style={{width: '5%'}}>
-                        { statusMessage.isError ? <ErrorOutline /> : <CheckCircleOutline />}
-                    </div>
-                    <div style={{width: '30%'}}>
-                        { statusMessage.message}
-                    </div>
-                </div>
+                <Box sx={{ mt: 3, maxWidth: '600px', mx: 'auto' }}>
+                    <Alert
+                        severity={statusMessage.isError ? 'error' : 'success'}
+                        icon={statusMessage.isError ? <ErrorOutline /> : <CheckCircleOutline />}
+                        sx={{
+                            borderRadius: '12px',
+                            '& .MuiAlert-message': {
+                                fontWeight: 600
+                            }
+                        }}
+                    >
+                        {statusMessage.message}
+                    </Alert>
+                </Box>
             )
         }
     }
 
     return (
-        <div>
-            <div className='section-label'>
-                Upload a zip file:
-            </div>
+        <Box sx={{ maxWidth: '900px', margin: '0 auto' }}>
+            <Typography variant="h4" sx={{ mb: 4, fontWeight: 700, color: '#2d3748', textAlign: 'center' }}>
+                Upload Replays
+            </Typography>
+            <Typography variant="body1" sx={{ mb: 4, color: '#718096', textAlign: 'center', maxWidth: '700px', mx: 'auto' }}>
+                Share your replay files with the community. Upload a .zip file containing your .ggr replay files and they will be added to the database.
+            </Typography>
             {renderUploadInput()}
             {renderSubmitButton()}
             {renderStatusMessage()}
             {renderSpinner()}
-        </div>
+        </Box>
     )
 }
